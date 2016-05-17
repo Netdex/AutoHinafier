@@ -21,12 +21,12 @@ namespace AutoHinafier
         }
 
         private CascadeClassifier _cascadeClassifier;
-        private Image<Bgr, Byte> _hina;
+        private Image<Bgra, Byte> _hina;
 
         private void AutoHinafier_Load(object sender, EventArgs e)
         {
-            _cascadeClassifier = new CascadeClassifier(Application.StartupPath + "/lbpcascade_animeface.xml");
-            _hina = new Image<Bgr, Byte>(Properties.Resources.Hinaface);
+            _cascadeClassifier = new CascadeClassifier(Application.StartupPath + "/haarcascade_frontalface_default.xml");
+            _hina = new Image<Bgra, Byte>(Properties.Resources.Hinaface);
         }
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -35,13 +35,17 @@ namespace AutoHinafier
             var result = ofd.ShowDialog();
             if (result == DialogResult.OK)
             {
-                var imageFrame = new Image<Bgr, Byte>(ofd.FileName);
+                var imageFrame = new Image<Bgra, Byte>(ofd.FileName);
                 var grayframe = imageFrame.Convert<Gray, byte>();
-                var faces = _cascadeClassifier.DetectMultiScale(grayframe, 1.08, 10, Size.Empty);
+                var faces = _cascadeClassifier.DetectMultiScale(grayframe, 1.1, 10, Size.Empty);
                 
                 foreach (var face in faces)
                 {
-                    Rectangle adjusted = new Rectangle(face.X + face.Width / 5, face.Y + face.Height / 5, face.Width * 3 / 5, face.Width * 3 / 5);
+                    Rectangle adjusted;
+                    if (chkAnime.Checked)
+                        adjusted = new Rectangle(face.X + face.Width / 5, face.Y + face.Height / 5, face.Width * 3 / 5, face.Width * 3 / 5);
+                    else
+                        adjusted = new Rectangle(face.X + face.Width / 8, face.Y + face.Height / 8, face.Width * 6 / 8, face.Width * 6 / 8);
                     imageFrame.ROI = adjusted;
                     var overlay = _hina.Resize(adjusted.Width, adjusted.Height, Inter.Area, false);
                     var k = adjusted.Width / 8;
@@ -50,9 +54,16 @@ namespace AutoHinafier
                     imageFrame._And(overlay);
                     imageFrame.ROI = Rectangle.Empty;
                 }
-                imageFrame.ROI = Rectangle.Empty;
                 imageBox.Image = imageFrame;
             }
+        }
+
+        private void chkHuman_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chkAnime.Checked)
+                _cascadeClassifier = new CascadeClassifier(Application.StartupPath + "/lbpcascade_animeface.xml");
+            else
+                _cascadeClassifier = new CascadeClassifier(Application.StartupPath + "/haarcascade_frontalface_default.xml");
         }
     }
 }

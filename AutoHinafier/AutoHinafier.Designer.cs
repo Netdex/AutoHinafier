@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.imageBox = new Emgu.CV.UI.ImageBox();
             this.btnImport = new System.Windows.Forms.Button();
+            this.chkAnime = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,11 +57,24 @@
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
+            // chkAnime
+            // 
+            this.chkAnime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkAnime.AutoSize = true;
+            this.chkAnime.Location = new System.Drawing.Point(12, 456);
+            this.chkAnime.Name = "chkAnime";
+            this.chkAnime.Size = new System.Drawing.Size(69, 21);
+            this.chkAnime.TabIndex = 4;
+            this.chkAnime.Text = "Anime";
+            this.chkAnime.UseVisualStyleBackColor = true;
+            this.chkAnime.CheckedChanged += new System.EventHandler(this.chkHuman_CheckedChanged);
+            // 
             // AutoHinafier
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 486);
+            this.Controls.Add(this.chkAnime);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.imageBox);
             this.Name = "AutoHinafier";
@@ -68,6 +82,7 @@
             this.Load += new System.EventHandler(this.AutoHinafier_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -75,5 +90,6 @@
 
         private Emgu.CV.UI.ImageBox imageBox;
         private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.CheckBox chkAnime;
     }
 }
