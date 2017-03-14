@@ -46,7 +46,7 @@ namespace AutoHinafier
             CascadeClassifiers[FaceType.Human] = new CascadeClassifier(Application.StartupPath + "/haarcascade_frontalface_default.xml");
             AdjustmentFactor[FaceType.Anime] = new RectangleF(1f / 5, 1f / 5, 3f / 5, 3f / 5);
             AdjustmentFactor[FaceType.Human] = new RectangleF(1f / 8, 1f / 8, 6f / 8, 6f / 8);
-            
+
             var img = new Image<Bgra, byte>(Properties.Resources.Hinaface);
             _hina = img.ToUMat();
         }
@@ -264,6 +264,7 @@ namespace AutoHinafier
             new Thread(() =>
             {
                 var vc = new Capture(txtSource.Text);
+
                 var vw = new VideoWriter(txtDestination.Text,
                     (int)vc.GetCaptureProperty(CapProp.Fps),
                     new Size((int)vc.GetCaptureProperty(CapProp.FrameWidth), (int)vc.GetCaptureProperty(CapProp.FrameHeight)),
@@ -287,20 +288,23 @@ namespace AutoHinafier
 
                     imageBoxRenderPreview.Image = lastFrame;
                     renderedFrames++;
-                    BeginInvoke((MethodInvoker)delegate
+                    if (renderedFrames % 15 == 0)
                     {
-                        progressBarRender.Value = 100 * renderedFrames / totalFrames;
-                    });
+                        BeginInvoke((MethodInvoker) delegate
+                        {
+                            progressBarRender.Value = 100 * renderedFrames / totalFrames;
+                        });
+                    }
                 }
                 lastFrame?.Dispose();
                 vw.Dispose();
-                
+
                 BeginInvoke((MethodInvoker)delegate
                 {
                     btnRender.Enabled = true;
                     MessageBox.Show("Rendering completed", "AutoHinafier", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 });
-                
+
             }).Start();
         }
     }
