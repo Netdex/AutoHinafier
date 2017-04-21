@@ -10,15 +10,8 @@ Examples
 **haarcascade_frontalface_default**
 
 Before:
-![before](http://i.imgur.com/mEO6nT6.jpg)
+![before](http://i.imgur.com/PbW6AU0.jpg)
 
 After:
-![after](http://i.imgur.com/BHQ7iNF.jpg)
+![after](http://i.imgur.com/rXD2tiX.png)
 
-**lbpcascade_animeface**
-
-Before:
-![before2](http://i.imgur.com/OWuRUHG.jpg)
-
-After:
-![after2](http://i.imgur.com/rLryagV.jpg)
