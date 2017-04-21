@@ -10,8 +10,10 @@ Examples
 **haarcascade_frontalface_default**
 
 Before:
+
 ![before](http://i.imgur.com/PbW6AU0.jpg)
 
 After:
+
 ![after](http://i.imgur.com/rXD2tiX.png)
 
